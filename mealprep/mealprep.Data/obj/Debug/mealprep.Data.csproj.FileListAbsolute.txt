@@ -1,0 +1,2 @@
+C:\Users\NágelPéterSebestyén\Documents\DEV\dot_net_demo\mealprep\mealprep.Data\obj\Debug\mealprep.Data.csprojAssemblyReference.cache
+C:\Users\NágelPéterSebestyén\Documents\DEV\dot_net_demo\mealprep\mealprep.Data\obj\Debug\mealprep.Data.csproj.CoreCompileInputs.cache

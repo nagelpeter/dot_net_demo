@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Allergen">
+    <Key>
+      <PropertyRef Name="AllergenID" />
+    </Key>
+    <Property Name="AllergenID" Type="Decimal" Precision="5" Scale="0" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="AllergenConnectionTables" Relationship="Self.as_fk2" FromRole="Allergen" ToRole="AllergenConnectionTable" />
+  </EntityType>
+  <EntityType Name="AllergenConnectionTable">
+    <Key>
+      <PropertyRef Name="AllergenConnectionTableID" />
+    </Key>
+    <Property Name="AllergenConnectionTableID" Type="Decimal" Precision="5" Scale="0" Nullable="false" />
+    <Property Name="FoodID" Type="Decimal" Precision="5" Scale="0" Nullable="false" />
+    <Property Name="AllergenID" Type="Decimal" Precision="5" Scale="0" Nullable="false" />
+    <NavigationProperty Name="Allergen" Relationship="Self.as_fk2" FromRole="AllergenConnectionTable" ToRole="Allergen" />
+    <NavigationProperty Name="Food" Relationship="Self.as_fk1" FromRole="AllergenConnectionTable" ToRole="Food" />
+  </EntityType>
+  <EntityType Name="Food">
+    <Key>
+      <PropertyRef Name="FoodID" />
+    </Key>
+    <Property Name="FoodID" Type="Decimal" Precision="5" Scale="0" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Servings" Type="Decimal" Precision="1" Scale="0" />
+    <Property Name="BestB4" Type="Decimal" Precision="1" Scale="0" />
+    <Property Name="Type" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="AllergenConnectionTables" Relationship="Self.as_fk1" FromRole="Food" ToRole="AllergenConnectionTable" />
+    <NavigationProperty Name="Recipes" Relationship="Self.r_fk1" FromRole="Food" ToRole="Recipe" />
+  </EntityType>
+  <EntityType Name="Ingredient">
+    <Key>
+      <PropertyRef Name="IngredientID" />
+    </Key>
+    <Property Name="IngredientID" Type="Decimal" Precision="5" Scale="0" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Unit" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Type" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Recipes" Relationship="Self.r_fk2" FromRole="Ingredient" ToRole="Recipe" />
+  </EntityType>
+  <EntityType Name="Recipe">
+    <Key>
+      <PropertyRef Name="RecipeID" />
+    </Key>
+    <Property Name="RecipeID" Type="Decimal" Precision="5" Scale="0" Nullable="false" />
+    <Property Name="FoodID" Type="Decimal" Precision="5" Scale="0" Nullable="false" />
+    <Property Name="IngredientID" Type="Decimal" Precision="5" Scale="0" Nullable="false" />
+    <Property Name="Quantity" Type="Decimal" Precision="5" Scale="2" />
+    <NavigationProperty Name="Food" Relationship="Self.r_fk1" FromRole="Recipe" ToRole="Food" />
+    <NavigationProperty Name="Ingredient" Relationship="Self.r_fk2" FromRole="Recipe" ToRole="Ingredient" />
+  </EntityType>
+  <Association Name="as_fk2">
+    <End Role="Allergen" Type="Self.Allergen" Multiplicity="1" />
+    <End Role="AllergenConnectionTable" Type="Self.AllergenConnectionTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Allergen">
+        <PropertyRef Name="AllergenID" />
+      </Principal>
+      <Dependent Role="AllergenConnectionTable">
+        <PropertyRef Name="AllergenID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="as_fk1">
+    <End Role="Food" Type="Self.Food" Multiplicity="1" />
+    <End Role="AllergenConnectionTable" Type="Self.AllergenConnectionTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Food">
+        <PropertyRef Name="FoodID" />
+      </Principal>
+      <Dependent Role="AllergenConnectionTable">
+        <PropertyRef Name="FoodID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="r_fk1">
+    <End Role="Food" Type="Self.Food" Multiplicity="1" />
+    <End Role="Recipe" Type="Self.Recipe" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Food">
+        <PropertyRef Name="FoodID" />
+      </Principal>
+      <Dependent Role="Recipe">
+        <PropertyRef Name="FoodID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="r_fk2">
+    <End Role="Ingredient" Type="Self.Ingredient" Multiplicity="1" />
+    <End Role="Recipe" Type="Self.Recipe" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ingredient">
+        <PropertyRef Name="IngredientID" />
+      </Principal>
+      <Dependent Role="Recipe">
+        <PropertyRef Name="IngredientID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DBEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Allergens" EntityType="Self.Allergen" />
+    <EntitySet Name="AllergenConnectionTables" EntityType="Self.AllergenConnectionTable" />
+    <EntitySet Name="Foods" EntityType="Self.Food" />
+    <EntitySet Name="Ingredients" EntityType="Self.Ingredient" />
+    <EntitySet Name="Recipes" EntityType="Self.Recipe" />
+    <AssociationSet Name="as_fk2" Association="Self.as_fk2">
+      <End Role="Allergen" EntitySet="Allergens" />
+      <End Role="AllergenConnectionTable" EntitySet="AllergenConnectionTables" />
+    </AssociationSet>
+    <AssociationSet Name="as_fk1" Association="Self.as_fk1">
+      <End Role="Food" EntitySet="Foods" />
+      <End Role="AllergenConnectionTable" EntitySet="AllergenConnectionTables" />
+    </AssociationSet>
+    <AssociationSet Name="r_fk1" Association="Self.r_fk1">
+      <End Role="Food" EntitySet="Foods" />
+      <End Role="Recipe" EntitySet="Recipes" />
+    </AssociationSet>
+    <AssociationSet Name="r_fk2" Association="Self.r_fk2">
+      <End Role="Ingredient" EntitySet="Ingredients" />
+      <End Role="Recipe" EntitySet="Recipes" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

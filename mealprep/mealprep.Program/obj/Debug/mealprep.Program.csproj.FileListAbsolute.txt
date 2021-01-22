@@ -1,0 +1,12 @@
+C:\Users\NágelPéterSebestyén\Documents\DEV\dot_net_demo\mealprep\mealprep.Program\bin\Debug\mealprep.Program.dll.config
+C:\Users\NágelPéterSebestyén\Documents\DEV\dot_net_demo\mealprep\mealprep.Program\bin\Debug\mealprep.Program.dll
+C:\Users\NágelPéterSebestyén\Documents\DEV\dot_net_demo\mealprep\mealprep.Program\bin\Debug\mealprep.Program.pdb
+C:\Users\NágelPéterSebestyén\Documents\DEV\dot_net_demo\mealprep\mealprep.Program\bin\Debug\EntityFramework.dll
+C:\Users\NágelPéterSebestyén\Documents\DEV\dot_net_demo\mealprep\mealprep.Program\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\NágelPéterSebestyén\Documents\DEV\dot_net_demo\mealprep\mealprep.Program\bin\Debug\EntityFramework.xml
+C:\Users\NágelPéterSebestyén\Documents\DEV\dot_net_demo\mealprep\mealprep.Program\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\NágelPéterSebestyén\Documents\DEV\dot_net_demo\mealprep\mealprep.Program\obj\Debug\mealprep.Program.csprojAssemblyReference.cache
+C:\Users\NágelPéterSebestyén\Documents\DEV\dot_net_demo\mealprep\mealprep.Program\obj\Debug\mealprep.Program.csproj.CoreCompileInputs.cache
+C:\Users\NágelPéterSebestyén\Documents\DEV\dot_net_demo\mealprep\mealprep.Program\obj\Debug\mealprep.Program.csproj.CopyComplete
+C:\Users\NágelPéterSebestyén\Documents\DEV\dot_net_demo\mealprep\mealprep.Program\obj\Debug\mealprep.Program.dll
+C:\Users\NágelPéterSebestyén\Documents\DEV\dot_net_demo\mealprep\mealprep.Program\obj\Debug\mealprep.Program.pdb

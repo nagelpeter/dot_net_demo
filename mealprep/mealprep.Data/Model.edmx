@@ -1,0 +1,326 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Allergen">
+          <Key>
+            <PropertyRef Name="AllergenID" />
+          </Key>
+          <Property Name="AllergenID" Type="numeric" Precision="5" Scale="0" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="AllergensCT">
+          <Key>
+            <PropertyRef Name="AllergensCTID" />
+          </Key>
+          <Property Name="AllergensCTID" Type="numeric" Precision="5" Scale="0" Nullable="false" />
+          <Property Name="FoodID" Type="numeric" Precision="5" Scale="0" Nullable="false" />
+          <Property Name="AllergenID" Type="numeric" Precision="5" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Food">
+          <Key>
+            <PropertyRef Name="FoodID" />
+          </Key>
+          <Property Name="FoodID" Type="numeric" Precision="5" Scale="0" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="30" />
+          <Property Name="Servings" Type="numeric" Precision="1" Scale="0" />
+          <Property Name="BestB4" Type="numeric" Precision="1" Scale="0" />
+          <Property Name="Type" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Ingredient">
+          <Key>
+            <PropertyRef Name="IngredientID" />
+          </Key>
+          <Property Name="IngredientID" Type="numeric" Precision="5" Scale="0" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="30" />
+          <Property Name="Unit" Type="varchar" MaxLength="15" />
+          <Property Name="Type" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Recipe">
+          <Key>
+            <PropertyRef Name="RecipeID" />
+          </Key>
+          <Property Name="RecipeID" Type="numeric" Precision="5" Scale="0" Nullable="false" />
+          <Property Name="FoodID" Type="numeric" Precision="5" Scale="0" Nullable="false" />
+          <Property Name="IngredientID" Type="numeric" Precision="5" Scale="0" Nullable="false" />
+          <Property Name="Quantity" Type="numeric" Precision="5" Scale="2" />
+        </EntityType>
+        <Association Name="as_fk1">
+          <End Role="Food" Type="Self.Food" Multiplicity="1" />
+          <End Role="AllergensCT" Type="Self.AllergensCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Food">
+              <PropertyRef Name="FoodID" />
+            </Principal>
+            <Dependent Role="AllergensCT">
+              <PropertyRef Name="FoodID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="as_fk2">
+          <End Role="Allergen" Type="Self.Allergen" Multiplicity="1" />
+          <End Role="AllergensCT" Type="Self.AllergensCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Allergen">
+              <PropertyRef Name="AllergenID" />
+            </Principal>
+            <Dependent Role="AllergensCT">
+              <PropertyRef Name="AllergenID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="r_fk1">
+          <End Role="Food" Type="Self.Food" Multiplicity="1" />
+          <End Role="Recipe" Type="Self.Recipe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Food">
+              <PropertyRef Name="FoodID" />
+            </Principal>
+            <Dependent Role="Recipe">
+              <PropertyRef Name="FoodID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="r_fk2">
+          <End Role="Ingredient" Type="Self.Ingredient" Multiplicity="1" />
+          <End Role="Recipe" Type="Self.Recipe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ingredient">
+              <PropertyRef Name="IngredientID" />
+            </Principal>
+            <Dependent Role="Recipe">
+              <PropertyRef Name="IngredientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBModelStoreContainer">
+          <EntitySet Name="Allergen" EntityType="Self.Allergen" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AllergensCT" EntityType="Self.AllergensCT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Food" EntityType="Self.Food" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ingredient" EntityType="Self.Ingredient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Recipe" EntityType="Self.Recipe" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="as_fk1" Association="Self.as_fk1">
+            <End Role="Food" EntitySet="Food" />
+            <End Role="AllergensCT" EntitySet="AllergensCT" />
+          </AssociationSet>
+          <AssociationSet Name="as_fk2" Association="Self.as_fk2">
+            <End Role="Allergen" EntitySet="Allergen" />
+            <End Role="AllergensCT" EntitySet="AllergensCT" />
+          </AssociationSet>
+          <AssociationSet Name="r_fk1" Association="Self.r_fk1">
+            <End Role="Food" EntitySet="Food" />
+            <End Role="Recipe" EntitySet="Recipe" />
+          </AssociationSet>
+          <AssociationSet Name="r_fk2" Association="Self.r_fk2">
+            <End Role="Ingredient" EntitySet="Ingredient" />
+            <End Role="Recipe" EntitySet="Recipe" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Allergen">
+          <Key>
+            <PropertyRef Name="AllergenID" />
+          </Key>
+          <Property Name="AllergenID" Type="Decimal" Precision="5" Scale="0" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AllergensCTs" Relationship="Self.as_fk2" FromRole="Allergen" ToRole="AllergensCT" />
+        </EntityType>
+        <EntityType Name="AllergensCT">
+          <Key>
+            <PropertyRef Name="AllergensCTID" />
+          </Key>
+          <Property Name="AllergensCTID" Type="Decimal" Precision="5" Scale="0" Nullable="false" />
+          <Property Name="FoodID" Type="Decimal" Precision="5" Scale="0" Nullable="false" />
+          <Property Name="AllergenID" Type="Decimal" Precision="5" Scale="0" Nullable="false" />
+          <NavigationProperty Name="Allergen" Relationship="Self.as_fk2" FromRole="AllergensCT" ToRole="Allergen" />
+          <NavigationProperty Name="Food" Relationship="Self.as_fk1" FromRole="AllergensCT" ToRole="Food" />
+        </EntityType>
+        <EntityType Name="Food">
+          <Key>
+            <PropertyRef Name="FoodID" />
+          </Key>
+          <Property Name="FoodID" Type="Decimal" Precision="5" Scale="0" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Servings" Type="Decimal" Precision="1" Scale="0" />
+          <Property Name="BestB4" Type="Decimal" Precision="1" Scale="0" />
+          <Property Name="Type" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AllergensCTs" Relationship="Self.as_fk1" FromRole="Food" ToRole="AllergensCT" />
+          <NavigationProperty Name="Recipes" Relationship="Self.r_fk1" FromRole="Food" ToRole="Recipe" />
+        </EntityType>
+        <EntityType Name="Ingredient">
+          <Key>
+            <PropertyRef Name="IngredientID" />
+          </Key>
+          <Property Name="IngredientID" Type="Decimal" Precision="5" Scale="0" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Unit" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Recipes" Relationship="Self.r_fk2" FromRole="Ingredient" ToRole="Recipe" />
+        </EntityType>
+        <EntityType Name="Recipe">
+          <Key>
+            <PropertyRef Name="RecipeID" />
+          </Key>
+          <Property Name="RecipeID" Type="Decimal" Precision="5" Scale="0" Nullable="false" />
+          <Property Name="FoodID" Type="Decimal" Precision="5" Scale="0" Nullable="false" />
+          <Property Name="IngredientID" Type="Decimal" Precision="5" Scale="0" Nullable="false" />
+          <Property Name="Quantity" Type="Decimal" Precision="5" Scale="2" />
+          <NavigationProperty Name="Food" Relationship="Self.r_fk1" FromRole="Recipe" ToRole="Food" />
+          <NavigationProperty Name="Ingredient" Relationship="Self.r_fk2" FromRole="Recipe" ToRole="Ingredient" />
+        </EntityType>
+        <Association Name="as_fk2">
+          <End Role="Allergen" Type="Self.Allergen" Multiplicity="1" />
+          <End Role="AllergensCT" Type="Self.AllergensCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Allergen">
+              <PropertyRef Name="AllergenID" />
+            </Principal>
+            <Dependent Role="AllergensCT">
+              <PropertyRef Name="AllergenID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="as_fk1">
+          <End Role="Food" Type="Self.Food" Multiplicity="1" />
+          <End Role="AllergensCT" Type="Self.AllergensCT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Food">
+              <PropertyRef Name="FoodID" />
+            </Principal>
+            <Dependent Role="AllergensCT">
+              <PropertyRef Name="FoodID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="r_fk1">
+          <End Role="Food" Type="Self.Food" Multiplicity="1" />
+          <End Role="Recipe" Type="Self.Recipe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Food">
+              <PropertyRef Name="FoodID" />
+            </Principal>
+            <Dependent Role="Recipe">
+              <PropertyRef Name="FoodID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="r_fk2">
+          <End Role="Ingredient" Type="Self.Ingredient" Multiplicity="1" />
+          <End Role="Recipe" Type="Self.Recipe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ingredient">
+              <PropertyRef Name="IngredientID" />
+            </Principal>
+            <Dependent Role="Recipe">
+              <PropertyRef Name="IngredientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Allergens" EntityType="Self.Allergen" />
+          <EntitySet Name="AllergensCTs" EntityType="Self.AllergensCT" />
+          <EntitySet Name="Foods" EntityType="Self.Food" />
+          <EntitySet Name="Ingredients" EntityType="Self.Ingredient" />
+          <EntitySet Name="Recipes" EntityType="Self.Recipe" />
+          <AssociationSet Name="as_fk2" Association="Self.as_fk2">
+            <End Role="Allergen" EntitySet="Allergens" />
+            <End Role="AllergensCT" EntitySet="AllergensCTs" />
+          </AssociationSet>
+          <AssociationSet Name="as_fk1" Association="Self.as_fk1">
+            <End Role="Food" EntitySet="Foods" />
+            <End Role="AllergensCT" EntitySet="AllergensCTs" />
+          </AssociationSet>
+          <AssociationSet Name="r_fk1" Association="Self.r_fk1">
+            <End Role="Food" EntitySet="Foods" />
+            <End Role="Recipe" EntitySet="Recipes" />
+          </AssociationSet>
+          <AssociationSet Name="r_fk2" Association="Self.r_fk2">
+            <End Role="Ingredient" EntitySet="Ingredients" />
+            <End Role="Recipe" EntitySet="Recipes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DBModelStoreContainer" CdmEntityContainer="DBEntities">
+          <EntitySetMapping Name="Allergens">
+            <EntityTypeMapping TypeName="DBModel.Allergen">
+              <MappingFragment StoreEntitySet="Allergen">
+                <ScalarProperty Name="AllergenID" ColumnName="AllergenID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AllergensCTs">
+            <EntityTypeMapping TypeName="DBModel.AllergensCT">
+              <MappingFragment StoreEntitySet="AllergensCT">
+                <ScalarProperty Name="AllergensCTID" ColumnName="AllergensCTID" />
+                <ScalarProperty Name="FoodID" ColumnName="FoodID" />
+                <ScalarProperty Name="AllergenID" ColumnName="AllergenID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Foods">
+            <EntityTypeMapping TypeName="DBModel.Food">
+              <MappingFragment StoreEntitySet="Food">
+                <ScalarProperty Name="FoodID" ColumnName="FoodID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Servings" ColumnName="Servings" />
+                <ScalarProperty Name="BestB4" ColumnName="BestB4" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ingredients">
+            <EntityTypeMapping TypeName="DBModel.Ingredient">
+              <MappingFragment StoreEntitySet="Ingredient">
+                <ScalarProperty Name="IngredientID" ColumnName="IngredientID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Recipes">
+            <EntityTypeMapping TypeName="DBModel.Recipe">
+              <MappingFragment StoreEntitySet="Recipe">
+                <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
+                <ScalarProperty Name="FoodID" ColumnName="FoodID" />
+                <ScalarProperty Name="IngredientID" ColumnName="IngredientID" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
